@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CUD Enterprise Risk Register</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">CUD</div>
+    <div><h1>Enterprise Risk Register</h1><p>Institutional Risk Management • Canadian University Dubai</p></div>
+  </div>
+  <button class="btn light" onclick="exportCSV()">Export CSV</button>
+</header>
+
+<div class="shell">
+  <aside>
+    <div class="nav active">▦ Dashboard</div>
+    <div class="nav" onclick="document.getElementById('register').scrollIntoView()">☷ Risk Register</div>
+    <div class="nav" onclick="openModal()">＋ Add Risk</div>
+    <div class="nav" onclick="document.getElementById('matrix').scrollIntoView()">◫ Risk Matrix</div>
+    <div class="nav" onclick="document.getElementById('analytics').scrollIntoView()">◔ Analytics</div>
+    <div class="side-note"><b>Risk scale</b><span class="dot low"></span> Low <span class="dot med"></span> Medium<br><span class="dot high"></span> High <span class="dot ext"></span> Extreme</div>
+  </aside>
+
+  <main>
+    <section class="hero">
+      <div><span class="eyebrow">INSTITUTIONAL EFFECTIVENESS</span><h2>Risk intelligence at a glance</h2><p>Identify, assess, treat and monitor institutional risks with clear ownership and residual-risk tracking.</p></div>
+      <button class="btn primary" onclick="openModal()">＋ New Risk</button>
+    </section>
+
+    <section class="cards">
+      <div class="card"><span>Total Risks</span><strong id="total">0</strong><small>Active register</small></div>
+      <div class="card red"><span>Extreme / High</span><strong id="critical">0</strong><small>Needs attention</small></div>
+      <div class="card amber"><span>Medium</span><strong id="medium">0</strong><small>Monitor closely</small></div>
+      <div class="card green"><span>Low</span><strong id="low">0</strong><small>Controlled</small></div>
+    </section>
+
+    <section class="panel" id="register">
+      <div class="panel-head"><div><h3>Risk Register</h3><p>Search, filter, review and update risks.</p></div>
+        <div class="tools"><input id="search" placeholder="Search risk, owner, category…" oninput="render()">
+        <select id="filter" onchange="render()"><option value="">All priorities</option><option>Extreme</option><option>High</option><option>Medium</option><option>Low</option></select></div>
+      </div>
+      <div class="table-wrap"><table><thead><tr>
+        <th>Risk ID</th><th>Risk</th><th>Category</th><th>Owner</th><th>Initial</th><th>Treatment</th><th>Residual</th><th>Action</th>
+      </tr></thead><tbody id="rows"></tbody></table></div>
+    </section>
+
+    <section class="grid2">
+      <div class="panel" id="matrix"><div class="panel-head"><div><h3>5×5 Risk Matrix</h3><p>Impact × likelihood overview</p></div></div><div id="heatmap" class="heatmap"></div></div>
+      <div class="panel" id="analytics"><div class="panel-head"><div><h3>Category Distribution</h3><p>Current register composition</p></div></div><div id="bars"></div></div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal">
+ <div class="dialog">
+  <div class="dialog-head"><div><h3 id="modalTitle">Add New Risk</h3><p>Complete the assessment and mitigation details.</p></div><button class="x" onclick="closeModal()">×</button></div>
+  <form id="riskForm">
+   <input type="hidden" id="editIndex">
+   <div class="form-grid">
+    <label>Risk ID<input id="riskId" required placeholder="R-001"></label>
+    <label>Category<select id="category" required><option>Strategic</option><option>Academic</option><option>Operational</option><option>Financial</option><option>Compliance</option><option>Technology</option><option>Reputation</option><option>Health & Safety</option></select></label>
+    <label class="wide">Risk<textarea id="risk" required placeholder="Describe the risk event…"></textarea></label>
+    <label>Risk Owner<input id="owner" required placeholder="Department / role"></label>
+    <label>Risk Treatment<select id="treatment"><option>Mitigate</option><option>Avoid</option><option>Transfer</option><option>Accept</option></select></label>
+    <label class="wide">Likely Effect<textarea id="effect"></textarea></label>
+    <label class="wide">Root Cause / Potential Causes<textarea id="cause"></textarea></label>
+    <label class="wide">Process Controls in Place<textarea id="controls"></textarea></label>
+    <label>Initial Likelihood<select id="likelihood"></select></label>
+    <label>Initial Impact<select id="impact"></select></label>
+    <label class="wide">Mitigation Plan<textarea id="mitigation"></textarea></label>
+    <label>Revised Likelihood<select id="rlikelihood"></select></label>
+    <label>Revised Impact<select id="rimpact"></select></label>
+   </div>
+   <div class="form-foot"><button type="button" class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn primary">Save Risk</button></div>
+  </form>
+ </div>
+</div>
+
+<script src="app.js"></script>
+</body></html>
